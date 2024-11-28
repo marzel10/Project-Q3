@@ -48,7 +48,7 @@ class geometry_design:
         for i in range(len(Z)):
             x_cg += np.pi*self.diameter**2/4*X[i]
             z_cg += np.pi*self.diameter**2/4*Z[i]
-            area += np.pi*self.diameter**2 #calculate the total area
+            area += np.pi*self.diameter**2/4 #calculate the total area
         x_cg=np.round(x_cg/area,-4)
         z_cg=np.round(z_cg/area,-4)
 
@@ -69,23 +69,23 @@ class geometry_design:
         else:
             xs=self.x_spacing
 
-        #calculation of maximal number of fasteners in one column
+        #calculation of maximal number of fasteners in one column if number of fasteners was not specified by hand
         if self.n==0:
             self.n=geometry_design.number_of_fastners(self)
 
         n=int(self.n)
 
-        l=(n-1)*zs #lenght of the fasteners line
-        z1=np.arange(-l/2,l/2+zs,zs) #fasteners will be placed symetrically from 0 axis, +zs included to include the end
-        xn=np.arange(-(self.height/2-1.5*self.diameter),-(self.height/2-1.5*self.diameter)+(self.columns_number/2-1)*xs+xs,xs)
-        xp=np.arange((self.height/2-1.5*self.diameter)-(self.columns_number/2-1)*xs,(self.height/2-1.5*self.diameter)+xs,xs)
+        l=(n-1)*zs #lenght of the fasteners column
+        z1=np.arange(-l/2,l/2+zs,zs) #fasteners will be placed symetrically from 0 axis with step equal to zs (+zs included to include the end)
+        xn=np.arange(-(self.height/2-1.5*self.diameter),-(self.height/2-1.5*self.diameter)+(self.columns_number/2-1)*xs+xs,xs) #distribution of fasteners columns on the negative axis
+        xp=np.arange((self.height/2-1.5*self.diameter)-(self.columns_number/2-1)*xs,(self.height/2-1.5*self.diameter)+xs,xs) #distribution of fasteners columns on the positive axis
         x1=np.concatenate((xp,xn),axis=0)
 
 
         Z=[]
         X=[]
-        for i in range(len(x1)):
-            for j in range(len(z1)):
+        for i in range(len(x1)): #for every column of fasteners
+            for j in range(len(z1)): #for every row of fasteners
                 Z.append(z1[j])
                 X.append(x1[i])
 
@@ -119,13 +119,15 @@ class geometry_design:
         z1=np.arange(-l1/2,l1/2+zs,zs) #fasteners will be placed symetrically from 0 axis, +zs included to include the end
         z2 = np.arange(-l2 / 2, l2/ 2 + zs, zs)
 
-
+        #the same code as for the rectangular configuration
         xn=np.arange(-(self.height/2-1.5*self.diameter),-(self.height/2-1.5*self.diameter)+(self.columns_number/2-1)*xs+xs,xs)
         xp=np.arange((self.height/2-1.5*self.diameter)-(self.columns_number/2-1)*xs,(self.height/2-1.5*self.diameter)+xs,xs)
 
 
         Z=[]
         X=[]
+
+        # the same code as for the rectangular configuration, slightly changed to place longer columns on the other edges of the plate
         for i in range(len(xp)):
             if i%2==0:
                 for j in range(len(z2)):
@@ -158,7 +160,7 @@ class geometry_design:
             print("Wrong setting selection, chose grid or rectangular")
         return X,Z
 
-    def display_geometry(self):
+    def display_geometry(self): #function that displays geometry
         X,Z=geometry_design.position_matrix(self)
         plt.scatter(X, Z)
         plt.xlabel("x"); plt.ylabel("z")
@@ -174,7 +176,7 @@ class geometry_design:
 
 
 
-configuration1=geometry_design(2,50,8,100,"composite","grid")
+configuration1=geometry_design(2,50,4,100,"composite","grid",0,0,0)
 
 print(configuration1.cg_position())
 configuration1.display_geometry()
