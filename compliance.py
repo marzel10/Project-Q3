@@ -2,10 +2,9 @@ import numpy as np
 
 
 
-def compliance_b(d_nom, d_minor,d_sha, E_b, E_n,ht,t_1,t_2):
+def compliance_b(d_nom, d_minor, E_b, E_n,ht,t_1,t_2):
     #d_nom - nominal diameter of the fastener (from the standard specs)
     #d_minor - minor diameter of the fastener (from the standard specs)
-    #d_sha - diamter of the shank (from the standard specs)
     #t1 - thickness of the lug (from previous design steps)
     #t2 - thickness of the spacecraft wall (from prevoius work packedges*)
     #E_b, E_n - youngs modulus of the bolt and nut
@@ -25,9 +24,9 @@ def compliance_b(d_nom, d_minor,d_sha, E_b, E_n,ht,t_1,t_2):
     Ln=0.4*d_nom
     A_nom=np.pi*d_nom**2/4
     A_min=np.pi*d_minor**2/4
-    A_sha=np.pi*d_sha**2/4
 
-    com_b=(Lh/A_nom+Ls/A_min+(t_1+t_2)/A_sha)/E_b+Ln/E_n/A_nom
+
+    com_b=(Lh/A_nom+Ls/A_min+(t_1+t_2)/A_nom)/E_b+Ln/E_n/A_nom
 
     return com_b
 
@@ -40,11 +39,11 @@ def compliance_a(t,D_out,D_in,E_a):
 
     return com_a
 
-def force_ratio(d_nom, d_minor,d_sha, E_b, E_n,ht,t_1,D_out,E_p,t_2,E_w):
+def force_ratio(d_nom, d_minor, E_b, E_n,ht,t_1,D_out,E_p,t_2,E_w):
     # t_1 - thickness of the lug (from previous design steps)
     # t_2 - thickness of the spacecraft wall (from prevoius work packedges*)
 
-    fr=(compliance_a(t_1,D_out,d_sha,E_p)+compliance_a(t_2,D_out,d_sha,E_w))/(compliance_a(t_1,D_out,d_sha,E_p)+compliance_a(t_2,D_out,d_sha,E_w)+compliance_b(d_nom,d_minor,d_sha, E_b, E_n,ht,t_1,t_2))
+    fr=(compliance_a(t_1,D_out,d_nom,E_p)+compliance_a(t_2,D_out,d_nom,E_w))/(compliance_a(t_1,D_out,d_nom,E_p)+compliance_a(t_2,D_out,d_nom,E_w)+compliance_b(d_nom,d_minor, E_b, E_n,ht,t_1,t_2))
 
     return fr
 
