@@ -1,5 +1,7 @@
-from geometry_design import geometry_design
 import numpy as np
+
+
+
 def compliance_b(d_nom, d_minor,d_sha, E_b, E_n,ht,t_1,t_2):
     #d_nom - nominal diameter of the fastener (from the standard specs)
     #d_minor - minor diameter of the fastener (from the standard specs)
