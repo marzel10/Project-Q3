@@ -123,7 +123,7 @@ class geometry_design:
         xn=np.arange(-(self.height/2-1.5*self.diameter),-(self.height/2-1.5*self.diameter)+(self.columns_number/2-1)*xs+xs,xs)
         xp=np.arange((self.height/2-1.5*self.diameter)-(self.columns_number/2-1)*xs,(self.height/2-1.5*self.diameter)+xs,xs)
 
-
+        print(xn,xp)
         Z=[]
         X=[]
 
@@ -155,6 +155,7 @@ class geometry_design:
             X,Z=geometry_design.position_matrix_grid(self)
         elif self.setting=="rectangular":
             X,Z=geometry_design.position_matrix_rectangular(self)
+            print("Iamhere")
         else:
             X=0;Z=0;
             print("Wrong setting selection, chose grid or rectangular")
@@ -162,6 +163,7 @@ class geometry_design:
 
     def display_geometry(self): #function that displays geometry
         X,Z=geometry_design.position_matrix(self)
+
         plt.scatter(X, Z)
         plt.xlabel("x"); plt.ylabel("z")
         plt.axvline(x=self.height/2, ymin=-self.width/2, ymax=self.width/2, linewidth=2, linestyle="--", color='red')
@@ -176,8 +178,8 @@ class geometry_design:
 
 
 
-configuration1=geometry_design(2,50,4,100,"composite","grid",0,0,0)
+configuration1=geometry_design(7,50,2,100,"metal","rectangular",0,0,0)
 
-print(configuration1.cg_position())
+print(configuration1.position_matrix())
 configuration1.display_geometry()
 

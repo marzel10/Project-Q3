@@ -14,6 +14,20 @@ from operator import index
 # Import packages
 import numpy as np
 
+def Ktuf(x):
+    coef=[-1.10757616,  3.61431483, - 3.51609595,  0.21966005,  1.28383368]
+    Ktu=coef[0]*x**5+coef[1]*x**4+coef[2]*x**3+coef[3]*x**2+coef[4]*x
+    return Ktu
+
+def Kbrf(x):
+    coef = [-0.07657563,  0.73556647, - 2.56227493,  3.71020721, - 0.85730079]
+    Kbr = coef[0] * x ** 5 + coef[1] * x ** 4 + coef[2] * x ** 3 + coef[3] * x ** 2 + coef[4] * x
+    return Kbr
+
+def Kuf(x):
+    coef = [ 0.00520646, -0.08747833,  0.54885174, -1.59859635,  2.10344953]
+    Ku = coef[0] * x ** 5 + coef[1] * x ** 4 + coef[2] * x ** 3 + coef[3] * x ** 2 + coef[4] * x
+    return Ku
 # Design parameters
 D = np.linspace(0.01, 0.2, 100)
 w = np.linspace(0.01, 0.2, 100)
@@ -74,7 +88,7 @@ for Ds in D:
             A2 = l2 * ts
             Aav = 6/(4/A1+2/A2)
             ratio = Aav/Abr
-            Kty = -0.323*ratio**2+1.365*ratio
+            Ktu = Ktuf(ratio)
             h = 0.142
 
             for i in range(2):
