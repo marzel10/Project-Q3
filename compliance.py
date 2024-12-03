@@ -42,6 +42,8 @@ def compliance_a(t,D_out,D_in,E_a):
 def force_ratio(d_nom, d_minor, E_b, E_n,ht,t_1,D_out,E_p,t_2,E_w):
     # t_1 - thickness of the lug (from previous design steps)
     # t_2 - thickness of the spacecraft wall (from prevoius work packedges*)
+    # E_p - young modulus of the plate
+    # E_w - young modulus of the wall
 
     fr=(compliance_a(t_1,D_out,d_nom,E_p)+compliance_a(t_2,D_out,d_nom,E_w))/(compliance_a(t_1,D_out,d_nom,E_p)+compliance_a(t_2,D_out,d_nom,E_w)+compliance_b(d_nom,d_minor, E_b, E_n,ht,t_1,t_2))
 
