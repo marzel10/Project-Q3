@@ -126,7 +126,7 @@ for Ds in D:
                 mass = mprops[1] * ts * Afr
                 maxrtr=0
 
-                if Rtr<1 and Rtr1>1:
+                if Rtr<1 and Rtr1<1:
                     if conf[3]>mass: #if mass of the working configuration is smaller than the previous working configuration
                         maxrtr=Rtr #set maximal safety margin as Rtr
                         conf[0]=Ds #set diameter of the final configuration as Ds
