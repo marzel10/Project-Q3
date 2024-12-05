@@ -124,13 +124,24 @@ E_lug = 70e9
 Bearing_stress_lug = 70e6
 Yield_shear_lug = 70e6
 
+E_bolt = E_nut = 70e9
 
 # Moments and forces are in same direction as applied force (they represent the force the structure applies on the fasteners)
 # For many forces, do superposition of this function (everything is nice and linear (i think))
 #print(get_forces(fasteners, F, r_force, M))
 forces = get_forces(fasteners, F, r_force, M)
+
+
 inplane_normal_stresses = get_inplane_bearing_stress(forces, fasteners, t2,t3)
+max_normal_stress_lug = np.max(inplane_normal_stresses[0])
+max_normal_stress_wall = np.max(inplane_normal_stresses[1])
+
+
 out_of_plane_shear_stresses = get_shear_stress(forces, fasteners, t2, t3)
+max_shear_stress_lug = np.max(out_of_plane_shear_stresses[0])
+max_shear_stress_wall = np.max(out_of_plane_shear_stresses[1])
+
+
 
 print(forces)
 print(inplane_normal_stresses)
@@ -139,6 +150,24 @@ print(out_of_plane_shear_stresses)
 margin_inplane = get_MS_inplane_bearing_stress(inplane_normal_stresses, Bearing_stress_lug, Bearing_stress_wall)
 margin_shear = get_MS_shear_stress(out_of_plane_shear_stresses, Yield_shear_lug, Yield_shear_wall)
 
+d_nom = fasteners[0][1]
+print("d_nom",d_nom)
+d_minor = .8
+ht = "Hexagon"
+D_out = 1.2 * d_nom
 
-#PhiBolts = boltratios.force_ratio(d_nom, d_minor, E_bolt, E_nut, ht, t2, D_out, E_lug, t3, E_wall)
-#Thermal_stress = thermal.thermal_forces(PhiBolts, E_bolt, fasteners[1], alphac, alphab)
+alphac1 = 1.2e-5
+alphac2 = 1.2e-5
+alphab = 2e-5
+
+
+PhiBolts = boltratios.force_ratio(d_nom, d_minor, E_bolt, E_nut, ht, t2, D_out, E_lug, t3, E_wall)
+Thermal_stress = thermal.thermalforces2materials(PhiBolts, E_bolt, fasteners[0][1], alphac1,t2, alphac2,t3, alphab)
+												###fr, E_b, d, alphac1, t_lug, alphac2, t_wall, alphab
+Thermal_stress = max(Thermal_stress)
+
+max_normal_stress_lug += Thermal_stress
+max_normal_stress_wall += Thermal_stress
+
+
+print("Thermal Stress", Thermal_stress)
