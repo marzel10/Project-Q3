@@ -14,6 +14,12 @@ from operator import index
 # Import packages
 import numpy as np
 
+
+def Ktuf(x):
+    coef=[-1.10757616,  3.61431483, - 3.51609595,  0.21966005,  1.28383368]
+    Ktu=coef[0]*x**5+coef[1]*x**4+coef[2]*x**3+coef[3]*x**2+coef[4]*x
+    return Ktu
+
 # Design parameters
 D = np.linspace(0.001, 0.4, 100)
 w = np.linspace(0.001, 0.5, 100)
@@ -73,7 +79,7 @@ for Ds in D:
                 A2 = l2 * t
                 Aav = 6/(4/A1+2/A2)
                 ratio = Aav/Abr
-                Kty = -0.323*ratio**2+1.365*ratio
+                Ktu = Ktu(ratio)
                 sf = 2
                 MS = sf - 1
                 h = 0.142
@@ -95,7 +101,7 @@ for Ds in D:
                     Fa = load_cases[i]["Fz"]
                     Ftr = P_abs
 
-                    F_tr_allow = Kty * Abr * mprops[0]
+                    F_tr_allow = Ktu * Abr * mprops[0]
                     Rtr = Ftr/F_tr_allow
                     Ra = ((1 / (MS + 1))**1.6 - Rtr**1.6)**(1 / 1.6)
 
