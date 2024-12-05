@@ -98,13 +98,13 @@ class geometry_design:
 
         if self.z_spacing<geometry_design.c(self)*self.diameter:
             zs=geometry_design.c(self)*self.diameter
-            self.n=0
+            #self.n=0
         else:
             zs=self.z_spacing
 
         if self.x_spacing<geometry_design.c(self)*self.diameter:
             xs=geometry_design.c(self)*self.diameter
-            self.n=0
+            #self.n=0
         else:
             xs=self.x_spacing
 
@@ -178,7 +178,7 @@ class geometry_design:
 
 
 
-configuration1=geometry_design(7,50,2,100,"metal","rectangular",0,0,0)
+configuration1=geometry_design(7,100,2,200,"metal","rectangular",0,0,0)
 
 print(configuration1.position_matrix())
 configuration1.display_geometry()

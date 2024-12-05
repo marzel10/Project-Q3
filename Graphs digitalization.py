@@ -119,11 +119,10 @@ Ku = np.array([
 fit=curve_fit(f, Ktu[:,0],Ktu[:,1])
 fit1=curve_fit(f, Kbr[:,0],Kbr[:,1])
 fit2=curve_fit(f, Ku[:,0],Ku[:,1])
-print(fit2[0])
-X=Ktu[:,0]
-print(X)
-plt.scatter(Ku[:,0],Ku[:,1])
+print(fit[0])
+
+plt.scatter(Kbr[:,0],Kbr[:,1])
 #plt.plot(Ktu[:,0],f(Ktu[:,0],fit[0][0],fit[0][1],fit[0][2],fit[0][3],fit[0][4]))
-plt.plot(Ku[:,0],Kuf(Ku[:,0]),color="r")
+plt.plot(Kbr[:,0],Kbrf(Kbr[:,0]),color="r")
 plt.show()
 
