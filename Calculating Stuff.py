@@ -1,5 +1,6 @@
 import numpy as np
 import compliance as boltratios
+thermal = __import__("Thermal expansion thingy")
 
 # Calculates the center of gravity of the fasteners
 def cg_position(fasteners):
@@ -104,7 +105,7 @@ fasteners = [
 	[[-2.25, 0, -2.25], 1],
 	[[-2.25, 0, 2.25], 1],
 	[[2.25, 0, -2.25], 1],
-	[[2.25, 0, 2.25], 1],
+	[[2.25, 0, 2.25], 1]
 	# [[-9, 0, 1], 1],
 	# [[1, 0, -5], 2]
 ]
@@ -140,3 +141,4 @@ margin_shear = get_MS_shear_stress(out_of_plane_shear_stresses, Yield_shear_lug,
 
 
 #PhiBolts = boltratios.force_ratio(d_nom, d_minor, E_bolt, E_nut, ht, t2, D_out, E_lug, t3, E_wall)
+#Thermal_stress = thermal.thermal_forces(PhiBolts, E_bolt, fasteners[1], alphac, alphab)
